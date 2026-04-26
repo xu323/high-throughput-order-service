@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Show versions
+        run: |
+          java -version
+          mvn -version
+
+      - name: Compile (skip tests)
+        run: mvn -B -ntp -DskipTests compile
+
+      - name: Unit tests (surefire)
+        run: mvn -B -ntp test
+
+      - name: Integration tests (failsafe; H2 + mocks，無需 Docker)
+        run: mvn -B -ntp -DskipTests=false verify -DskipUTs=true || mvn -B -ntp verify
+
+      - name: Package jar
+        run: mvn -B -ntp -DskipTests package
+
+      - name: Docker build smoke check
+        run: docker build -t hto-ci-smoke .
+
+      - name: Docs check
+        run: |
+          echo "Verifying required docs exist..."
+          for f in README.md 使用方法.md docs/architecture.md docs/api.md docs/database-design.md docs/concurrency-design.md docs/cache-design.md docs/messaging-design.md docs/security-notes.md docs/troubleshooting.md docs/project-guide.md docs/research-notes.md; do
+            if [ ! -f "$f" ]; then
+              echo "Missing required doc: $f"
+              exit 1
+            fi
+          done
+          echo "All required docs present."
+
+      - name: Upload jar artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: target/*.jar
+          if-no-files-found: warn
+          retention-days: 7

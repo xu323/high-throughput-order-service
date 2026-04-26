@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "PowerShell",
+      "Monitor",
+      "Edit(/.claude/**)",
+      "Write(/.claude/**)"
+    ]
+  }
+}

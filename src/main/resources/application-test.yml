@@ -1,0 +1,35 @@
+# =============================================================
+# test profile：使用 H2 + 內嵌 RabbitMQ mock + 嵌入式 Redis
+# 本檔提供「最低成本」的單元測試環境，避免依賴 Docker。
+# IntegrationTest 會透過 Testcontainers 覆寫這些設定。
+# =============================================================
+spring:
+  datasource:
+    url: jdbc:h2:mem:orderdb;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        auto-startup: false   # 測試時不啟動真實 listener，避免依賴 broker
+
+logging:
+  level:
+    com.xu.orderservice: DEBUG

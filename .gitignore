@@ -1,0 +1,55 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE - IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# IDE - Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IDE - VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Spring Boot
+HELP.md
+*.original
+
+# Env / Secrets
+.env
+.env.local
+*.pem
+*.key
+secrets/
+
+# Docker volume data (if mounted locally)
+data/
+mysql-data/
+redis-data/
+rabbitmq-data/
+
+# Test output
+**/build/
+**/.gradle/
