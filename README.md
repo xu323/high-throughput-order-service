@@ -167,8 +167,9 @@ mvn spring-boot:run
 
 ## CI/CD 說明
 
-`.github/workflows/ci.yml`：
+`.github/workflows/ci.yml` 有兩個 job：
 
+### `build-test`（每次 push / PR）
 1. checkout → setup JDK 21 (Temurin) → maven cache
 2. `mvn compile`
 3. `mvn test`（surefire）
@@ -177,6 +178,24 @@ mvn spring-boot:run
 6. `docker build` smoke check
 7. 檢查必要文件是否存在
 8. 上傳 jar artifact
+
+### `publish-image`（只在 push main 時跑）
+- Build & push image 到 **GitHub Container Registry**：
+  - `ghcr.io/xu323/high-throughput-order-service:latest`
+  - `ghcr.io/xu323/high-throughput-order-service:sha-<short>`
+- 用 `GITHUB_TOKEN`，不需額外 secret
+
+**任何有 docker 的機器都能直接跑：**
+
+```powershell
+docker pull ghcr.io/xu323/high-throughput-order-service:latest
+docker run --rm -p 8080:8080 `
+  -e SPRING_PROFILES_ACTIVE=dev `
+  ghcr.io/xu323/high-throughput-order-service:latest
+```
+
+> 第一次 push 完，image 預設是 **private**。要公開讓別人也能 pull：
+> GitHub → 你的頭像 → Packages → `high-throughput-order-service` → Package settings → 下方 *Change visibility* → Public。
 
 ---
 
