@@ -25,7 +25,7 @@ public interface ProductInventoryRepository extends JpaRepository<ProductInvento
      * 回傳影響筆數；若為 0 表示庫存不足或被其他交易搶走。
      * 這是另一個防超賣的常見手段，與樂觀鎖併用更穩。
      */
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query(value = """
             UPDATE product_inventory
                SET available_stock = available_stock - :qty,
@@ -36,7 +36,7 @@ public interface ProductInventoryRepository extends JpaRepository<ProductInvento
             """, nativeQuery = true)
     int conditionalDeduct(@Param("productId") Long productId, @Param("qty") int qty);
 
-    @Modifying
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Query(value = """
             UPDATE product_inventory
                SET available_stock = available_stock + :qty,

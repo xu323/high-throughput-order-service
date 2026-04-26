@@ -5,7 +5,7 @@ import com.xu.orderservice.dto.ConcurrencyTestRequest;
 import com.xu.orderservice.dto.ConcurrencyTestResult;
 import com.xu.orderservice.service.ConcurrencyTestService;
 import com.xu.orderservice.service.DemoService;
-import io.swagger.v3.oas.annotations.tag.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

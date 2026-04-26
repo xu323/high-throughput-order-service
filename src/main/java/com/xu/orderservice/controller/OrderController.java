@@ -7,7 +7,7 @@ import com.xu.orderservice.dto.OrderEventDto;
 import com.xu.orderservice.service.OrderEventQueryService;
 import com.xu.orderservice.service.OrderService;
 import com.xu.orderservice.service.PaymentService;
-import io.swagger.v3.oas.annotations.tag.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

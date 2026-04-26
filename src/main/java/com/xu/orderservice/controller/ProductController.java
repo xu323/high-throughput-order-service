@@ -5,7 +5,7 @@ import com.xu.orderservice.dto.CreateProductRequest;
 import com.xu.orderservice.dto.InventoryDto;
 import com.xu.orderservice.dto.ProductDto;
 import com.xu.orderservice.service.ProductService;
-import io.swagger.v3.oas.annotations.tag.Tag;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
