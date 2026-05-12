@@ -24,8 +24,6 @@
 
 ## 專案介紹
 
-本專案是一個「**完整工程結構**」的 Java 後端系統，不是 CRUD demo。重點放在：
-
 1. **高併發下單**：以兩種策略（MySQL 樂觀鎖 / Redis 分散式鎖）防超賣，提供 API 切換並做併發壓測。
 2. **非同步事件**：訂單流程透過 RabbitMQ 解耦，consumer 負責通知、稽核紀錄；支援 retry 與 DLQ。
 3. **快取一致性**：Cache-Aside Pattern，對熱資料（商品、庫存）使用 Redis 快取。
